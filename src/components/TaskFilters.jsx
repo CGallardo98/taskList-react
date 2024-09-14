@@ -1,7 +1,8 @@
+import './TaskFilters.css';
+
 function TaskFilters() {
   return (
-    <>
-    </>
+    <></>
   );
 }
 
