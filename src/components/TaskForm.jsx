@@ -1,19 +1,29 @@
 import './TaskForm.css';
 import { useState } from 'react';
 import { FiPlus } from 'react-icons/fi';
+import CreatableSelect from 'react-select/creatable';
 
 function TaskForm({addTask}) {
   // Task attributes
   const [newTask, setNewTask] = useState('');
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState(null);
   const [dueDate, setDueDate] = useState('');
+
+  const [categories, setCategories] = useState([]);
+  const [isFocused, setIsFocused] = useState(false);
+
+  const handleAddCtg = (newCtg) => {
+    const newOption = {value: newCtg, label: newCtg };
+    setCategories((prev) => [...prev, newOption]);
+    setCategory(newOption);
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (newTask.trim()) {
-      addTask(newTask, category, dueDate);
+      addTask(newTask, category.value, dueDate);
       setNewTask('');
-      setCategory('');
+      setCategory(null);
       setDueDate('');
     }
   }
@@ -29,14 +39,24 @@ function TaskForm({addTask}) {
         onChange={(e) => setNewTask(e.target.value)} />
       
       {/* Category drop down menu */}
-      <select value={category} onChange={(e) => setCategory(e.target.value)}>
+      {/* <select value={category} onChange={(e) => setCategory(e.target.value)}>
         <option value="">Category</option>
         <option value="Personal">Personal</option>
         <option value="Work">Work</option>
         <option value="School">School</option>
         <option value="Home">Home</option>
 
-      </select>
+      </select> */}
+
+      <CreatableSelect
+        onChange={(option) => setCategory(option)}
+        onCreateOption={handleAddCtg}
+        options={categories}
+        value={category}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        placeholder={isFocused ? 'Add category' : 'Category'}
+      />
 
       {/* Date selection calendar */}
       <input 

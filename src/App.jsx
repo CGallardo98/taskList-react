@@ -1,5 +1,6 @@
 import './index.css';
 import Header from './components/Header';
+import TaskSearch from './components/TaskSearch';
 import TaskFilters from './components/TaskFilters';
 import TaskForm from './components/TaskForm';
 import TaskList from './components/TaskList';
@@ -48,6 +49,8 @@ function App() {
   return (
     <div className="app-container">
       <Header/>
+      <TaskSearch/>
+      <TaskFilters/>
       <TaskForm addTask={addTask}/>
       <TaskList 
         tasks={tasks}
